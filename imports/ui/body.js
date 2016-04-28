@@ -9,3 +9,18 @@ Template.body.helpers({
 		return Tasks.find({}, {sort: {createdAt: -1}});
 	},
 });
+
+Template.body.events({
+	'submit .js-add-new-task'(event) {
+		event.preventDefault();
+		const target = event.target;
+		const text = target.text.value;
+
+		Tasks.insert({
+			text: text,
+			createdAt: new Date(),
+		});
+
+		target.text.value = "";
+	},
+});
