@@ -1,13 +1,23 @@
 "use strict";
 
 import { Template } from 'meteor/templating';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { Tasks } from '../api/tasks';
 import './body.html';
 import './task.js';
 
+Template.body.onCreated(function onBodyCreated() {
+	this.state = new ReactiveDict();
+});
+
 Template.body.helpers({
 	tasks() {
-		return Tasks.find({}, {sort: {createdAt: -1}});
+		const instance = Template.instance();
+		if (instance.state.get('hideCompleted')) {
+			return Tasks.find({checked: {$ne: true}}, {sort: {createdAt: -1}});
+		} else {
+			return Tasks.find({}, {sort: {createdAt: -1}});
+		}
 	},
 });
 
@@ -24,5 +34,9 @@ Template.body.events({
 		});
 
 		target.text.value = "";
+	},
+
+	'change .js-hide-completed'(event, instance) {
+		instance.state.set('hideCompleted', event.target.checked);
 	},
 });
