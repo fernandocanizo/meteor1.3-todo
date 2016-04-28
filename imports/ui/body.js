@@ -1,8 +1,9 @@
 "use strict";
 
 import { Template } from 'meteor/templating';
-import './body.html';
 import { Tasks } from '../api/tasks';
+import './body.html';
+import './task.js';
 
 Template.body.helpers({
 	tasks() {
@@ -19,6 +20,7 @@ Template.body.events({
 		Tasks.insert({
 			text: text,
 			createdAt: new Date(),
+			checked: false,
 		});
 
 		target.text.value = "";
