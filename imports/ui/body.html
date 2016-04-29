@@ -8,9 +8,13 @@
 			    Hide Completed Tasks
 			</label>
 
-			<form class="js-add-new-task new-task">
-				<input type="text" name="text" placeholder="Add some task here..." autofocus>
-			</form>
+			{{> loginButtons}}
+
+			{{# if currentUser}}
+				<form class="js-add-new-task new-task">
+					<input type="text" name="text" placeholder="Add some task here..." autofocus>
+				</form>
+			{{/if}}
 		</header>
 
 		<ul>

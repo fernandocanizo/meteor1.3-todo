@@ -35,6 +35,8 @@ Template.body.events({
 			text: text,
 			createdAt: new Date(),
 			checked: false,
+			owner: Meteor.userId(),
+			username: Meteor.user().username,
 		});
 
 		target.text.value = "";
