@@ -1,5 +1,6 @@
 "use strict";
 
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Tasks } from '../api/tasks';
@@ -30,15 +31,7 @@ Template.body.events({
 		event.preventDefault();
 		const target = event.target;
 		const text = target.text.value;
-
-		Tasks.insert({
-			text: text,
-			createdAt: new Date(),
-			checked: false,
-			owner: Meteor.userId(),
-			username: Meteor.user().username,
-		});
-
+		Meteor.call('tasks.insert', text);
 		target.text.value = "";
 	},
 
