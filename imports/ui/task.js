@@ -13,4 +13,18 @@ Template.task.events({
 	"click .js-delete"() {
 		Meteor.call('tasks.remove', this._id);
 	},
+
+	"click .js-toggle-private"() {
+		Meteor.call('tasks.setPrivate', this._id, ! this.isPrivate);
+	},
+});
+
+Template.task.helpers({
+	'isOwner'() {
+		return this.owner === Meteor.userId();
+	},
+
+	'isPrivateOrPublic'() {
+		return Meteor.call('tasks.isPrivateOrPublic', this._id);
+	},
 });
