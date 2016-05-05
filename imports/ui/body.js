@@ -9,6 +9,7 @@ import './task.js';
 
 Template.body.onCreated(function onBodyCreated() {
 	this.state = new ReactiveDict();
+	Meteor.subscribe("tasks");
 });
 
 Template.body.helpers({
