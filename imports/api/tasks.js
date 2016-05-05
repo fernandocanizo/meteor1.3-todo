@@ -7,8 +7,12 @@ import { check } from 'meteor/check';
 export const Tasks = new Mongo.Collection('tasks');
 
 if (Meteor.isServer) {
+	// only publish tasks public or belonging to this user
 	Meteor.publish('tasks', function tasksPublication () {
-		return Tasks.find();
+		return Tasks.find({$or: [
+			{isPrivate: false},
+			{owner: this.userId}
+		]});
 	});
 }
 
